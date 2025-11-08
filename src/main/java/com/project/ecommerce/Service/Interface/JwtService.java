@@ -2,24 +2,25 @@ package com.project.ecommerce.Service.Interface;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 public interface JwtService {
 
-    public String generateToken(UserDetails userDetails);
+     String generateToken(UserDetails userDetails);
 
-    public String extractUserName(String token);
+    String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails);
 
-    public  <T> T extractClaim(String token, Function<Claims, T> claimResolver);
+    String extractUserName(String token);
 
-    public Claims extractAllClaims(String token);
+    <T> T extractClaim(String token, Function<Claims, T> claimResolver);
 
-    public boolean validateToken(String token, UserDetails userDetails);
+    Claims extractAllClaims(String token);
 
-    public boolean isTokenExpired(String token);
+    boolean validateToken(String token, UserDetails userDetails);
 
-    public Date extractExpiration(String token);
+    boolean isTokenExpired(String token);
 
+    Date extractExpiration(String token);
 }

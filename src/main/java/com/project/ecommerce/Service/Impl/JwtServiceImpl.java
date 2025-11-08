@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -42,6 +43,17 @@ public class JwtServiceImpl implements JwtService {
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(Key)
+                .compact();
+    }
+
+    public String generateRefreshToken(Map<String, Object> extraClaims, UserDetails userDetails){
+        return Jwts
+                .builder()
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date((new Date()).getTime() + 604800000))
                 .signWith(Key)
                 .compact();
     }

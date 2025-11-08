@@ -1,5 +1,8 @@
 package com.project.ecommerce.Controller;
 
+import com.project.ecommerce.DTO.JwtAuthenticationResponse;
+import com.project.ecommerce.DTO.RefreshTokenRequest;
+import com.project.ecommerce.DTO.SignInRequest;
 import com.project.ecommerce.DTO.SignUpRequest;
 import com.project.ecommerce.Model.EcommerceUser;
 import com.project.ecommerce.Service.Interface.AuthenticationService;
@@ -25,5 +28,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.SignUp(signUpRequest));
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthenticationResponse> login(@RequestBody SignInRequest signInRequest){
+        return ResponseEntity.ok(authenticationService.SignIn(signInRequest));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest){
+        return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
+    }
 
 }
