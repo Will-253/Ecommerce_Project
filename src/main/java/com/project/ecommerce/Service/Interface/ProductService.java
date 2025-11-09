@@ -6,10 +6,14 @@ import com.project.ecommerce.Model.Product;
 import java.util.List;
 
 public interface ProductService {
+
     List<ProductDTO> findAllProducts();
 
     ProductDTO findProductById(Long id);
 
-    void createProduct(ProductDTO productDTO);
+    Product createProduct(ProductDTO productDTO);
 
+    void deleteProductById(Long id);
+
+    ProductDTO updateProduct(Long id, ProductDTO productDTO);
 }

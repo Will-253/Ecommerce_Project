@@ -36,13 +36,39 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
-    public void createProduct(ProductDTO productDTO) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Product createProduct(ProductDTO productDTO) {
 
         Product product = convertToEntity(productDTO);
 
-      productRepository.save(product);
+        return productRepository.save(product);
 
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteProductById(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id:"));
+
+        productRepository.delete(product);
+    }
+
+    @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
+
+        Product existingProduct = productRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id:"));
+
+        existingProduct.setName(productDTO.getName());
+        existingProduct.setDescription(productDTO.getDescription());
+        existingProduct.setPrice(productDTO.getPrice());
+
+        Product savedProduct = productRepository.save(existingProduct);
+
+        return convertToDTO(savedProduct);
     }
 
     private ProductDTO convertToDTO(Product product) {
@@ -61,7 +87,4 @@ public class ProductServiceImpl implements ProductService {
 
         return product;
     }
-
-
-
 }

@@ -3,8 +3,11 @@ package com.project.ecommerce.Controller;
 import com.project.ecommerce.DTO.ProductDTO;
 import com.project.ecommerce.Model.Product;
 import com.project.ecommerce.Service.Interface.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,18 +21,44 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDTO> getAllProducts(){
-        return productService.findAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        return ResponseEntity.ok(productService.findAllProducts());
     }
 
     @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable Long id){
-        return productService.findProductById(id);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findProductById(id));
     }
 
     @PostMapping
-    public void createNewProduct(@RequestBody ProductDTO productDTO){
-        productService.createProduct(productDTO);
+    public ResponseEntity<Void> createNewProduct(@RequestBody ProductDTO productDTO,
+                                                 UriComponentsBuilder ucb) {
+
+        Product savedProduct= productService.createProduct(productDTO);
+
+        URI productLocation = ucb
+                .path("/api/product/{id}")
+                .buildAndExpand(savedProduct.getId())
+                .toUri();
+        return ResponseEntity.created(productLocation).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
+
+        productService.deleteProductById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ProductDTO> updateProduct(
+            @PathVariable Long id,
+            @RequestBody ProductDTO productDTO) {
+
+        ProductDTO updatedProduct = productService.updateProduct(id,productDTO);
+
+        return ResponseEntity.ok(updatedProduct);
     }
 
 }
