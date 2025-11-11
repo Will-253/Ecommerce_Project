@@ -2,12 +2,13 @@ package com.project.ecommerce.Service.Interface;
 
 import com.project.ecommerce.DTO.ProductDTO;
 import com.project.ecommerce.Model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
 
 public interface ProductService {
 
-    List<ProductDTO> findAllProducts();
+    Page<ProductDTO> findAllProducts(PageRequest pageRequest);
 
     ProductDTO findProductById(Long id);
 
@@ -16,4 +17,6 @@ public interface ProductService {
     void deleteProductById(Long id);
 
     ProductDTO updateProduct(Long id, ProductDTO productDTO);
+
+
 }

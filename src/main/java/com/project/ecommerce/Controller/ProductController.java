@@ -3,6 +3,10 @@ package com.project.ecommerce.Controller;
 import com.project.ecommerce.DTO.ProductDTO;
 import com.project.ecommerce.Model.Product;
 import com.project.ecommerce.Service.Interface.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -21,8 +25,16 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        return ResponseEntity.ok(productService.findAllProducts());
+    public ResponseEntity<List<ProductDTO>> getAllProducts(Pageable pageable) {
+
+        Page<ProductDTO> page = productService.findAllProducts(
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "name"))
+                ));
+
+        return ResponseEntity.ok(page.getContent());
     }
 
     @GetMapping("/{id}")

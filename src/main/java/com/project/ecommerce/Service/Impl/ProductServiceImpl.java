@@ -5,10 +5,11 @@ import com.project.ecommerce.Exceptions.ResourceNotFoundException;
 import com.project.ecommerce.Model.Product;
 import com.project.ecommerce.Repository.ProductRepository;
 import com.project.ecommerce.Service.Interface.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -20,11 +21,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .map(this::convertToDTO)
-                .toList();
+    public Page<ProductDTO> findAllProducts(PageRequest pageRequest) {
+        return productRepository.findAll(pageRequest)
+                .map(this::convertToDTO);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
 
         Product existingProduct = productRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Product not found with id:"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id:"));
 
         existingProduct.setName(productDTO.getName());
         existingProduct.setDescription(productDTO.getDescription());

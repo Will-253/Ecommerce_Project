@@ -40,6 +40,7 @@ public class MySecurityConfiguration {
                 .authorizeHttpRequests(request ->
                         request.requestMatchers("/api/auth/**", "/api/products/**").permitAll()
                                 .requestMatchers("/api/admin").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/api/cart**","/api/orders**").hasAnyAuthority(Role.USER.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager ->
                         manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
