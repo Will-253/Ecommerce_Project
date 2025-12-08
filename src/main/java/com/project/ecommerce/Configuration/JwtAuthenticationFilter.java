@@ -1,7 +1,7 @@
 package com.project.ecommerce.Configuration;
 
 import com.project.ecommerce.Service.Interface.JwtService;
-import com.project.ecommerce.Service.MyUserDetailsService;
+import com.project.ecommerce.Service.Impl.MyUserDetailsService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

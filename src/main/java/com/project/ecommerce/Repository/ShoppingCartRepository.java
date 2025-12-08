@@ -5,8 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 
 public interface ShoppingCartRepository extends JpaRepository<CartItem, Long> {
 
     Page<CartItem> findAllByUser_Username(String userUsername, Pageable pageable);
+
+    Optional<CartItem> findByIdAndUserUsername(Long id, String userUsername);
+
+    void deleteByUser_Username(String userUsername);
+
+    long deleteByIdAndUserUsername(Long id, String userUsername);
 }

@@ -1,6 +1,7 @@
 package com.project.ecommerce.Model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Product {
 
     private String name;
 
+    @Lob
     private String description;
 
     private Double price;

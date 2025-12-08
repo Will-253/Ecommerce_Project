@@ -1,7 +1,7 @@
 package com.project.ecommerce.Configuration;
 
 import com.project.ecommerce.Model.Role;
-import com.project.ecommerce.Service.MyUserDetailsService;
+import com.project.ecommerce.Service.Impl.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,7 +39,7 @@ public class MySecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
                         request.requestMatchers("/api/auth/**", "/api/products/**").permitAll()
-                                .requestMatchers("/api/admin").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/api/admin**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers("/api/cart**","/api/orders**").hasAnyAuthority(Role.USER.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(manager ->

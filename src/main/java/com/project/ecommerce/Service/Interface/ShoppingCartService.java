@@ -6,11 +6,18 @@ import com.project.ecommerce.Model.CartItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.security.Principal;
+import java.util.List;
+
 public interface ShoppingCartService {
 
     Page<CartItemResponseDTO> getCartItems(String name, PageRequest pageRequest);
 
     CartItem addItemToCart(CartItemRequestDTO newCartItem, String name);
 
-    CartItem updateItemInCart(Long id, String name, CartItemRequestDTO requestDTO);
+    CartItemResponseDTO updateItemInCart(Long id, String name, CartItemRequestDTO requestDTO);
+
+    void deleteAllItems(String name);
+
+    void deleteCartItem(Long id, Principal principal);
 }

@@ -2,6 +2,7 @@ package com.project.ecommerce.Service.Impl;
 
 import com.project.ecommerce.DTO.CartItemRequestDTO;
 import com.project.ecommerce.DTO.CartItemResponseDTO;
+import com.project.ecommerce.Exceptions.ResourceNotFoundException;
 import com.project.ecommerce.Model.CartItem;
 import com.project.ecommerce.Model.EcommerceUser;
 import com.project.ecommerce.Model.Product;
@@ -9,10 +10,12 @@ import com.project.ecommerce.Repository.ProductRepository;
 import com.project.ecommerce.Repository.ShoppingCartRepository;
 import com.project.ecommerce.Repository.UserRepository;
 import com.project.ecommerce.Service.Interface.ShoppingCartService;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 
 
 @Service
@@ -47,8 +50,42 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public CartItem updateItemInCart(Long id, String name, CartItemRequestDTO requestDTO) {
-        return null;
+    public CartItemResponseDTO updateItemInCart(Long id, String name, CartItemRequestDTO requestDTO) {
+
+        CartItem existedItem = cartRepository.findByIdAndUserUsername(id, name)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + id));
+
+        if (!existedItem.getProduct().getId().equals(requestDTO.getProductId())) {
+
+            Product newProduct = productRepository.findById(requestDTO.getProductId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + requestDTO.getProductId()));
+
+            existedItem.setProduct(newProduct);
+        }
+
+        existedItem.setQuantity(requestDTO.getQuantity());
+
+        CartItem updatedCartItem = cartRepository.save(existedItem);
+
+        return convertToDTO(updatedCartItem);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllItems(String name) {
+        cartRepository.deleteByUser_Username(name);
+    }
+
+    @Override
+    public void deleteCartItem(Long id, Principal principal) {
+
+        String username = principal.getName();
+
+        long deletedCount = cartRepository.deleteByIdAndUserUsername(id, username);
+
+        if (deletedCount == 0) {
+            throw new ResourceNotFoundException("Cart item not found with id: " + id);
+        }
     }
 
 

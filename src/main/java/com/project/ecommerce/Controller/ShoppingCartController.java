@@ -46,20 +46,26 @@ public class ShoppingCartController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CartItem> updateCartItem(
+    public ResponseEntity<CartItemResponseDTO> updateCartItem(
             @PathVariable Long id, Principal principal, @RequestBody CartItemRequestDTO requestDTO){
 
         return ResponseEntity.ok(shoppingCartService.updateItemInCart(id,principal.getName(),requestDTO));
     }
 
     @DeleteMapping
-    public ResponseEntity<List<Void>> deleteAllCartItems(){
-        return ResponseEntity.ok(null);
+    public ResponseEntity<List<Void>> deleteAllCartItems(Principal principal) {
+
+        shoppingCartService.deleteAllItems(principal.getName());
+
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteCartItemById(@PathVariable Long id){
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Void> deleteCartItemById(@PathVariable Long id, Principal principal) {
+
+        shoppingCartService.deleteCartItem(id, principal);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
