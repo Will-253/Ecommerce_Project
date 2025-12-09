@@ -1,7 +1,6 @@
 package com.project.ecommerce.Model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
 
 import java.util.List;
 
@@ -19,6 +18,8 @@ public class Product {
 
     private Double price;
 
+    private Integer stock;
+
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CartItem> cartItems;
 
@@ -28,10 +29,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, Double price, List<CartItem> cartItems, List<OrderItem> orderItems) {
+    public Product(Long id, String name, String description, Double price, Integer stock, List<CartItem> cartItems, List<OrderItem> orderItems) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.stock = stock;
         this.cartItems = cartItems;
         this.orderItems = orderItems;
     }
@@ -82,5 +85,13 @@ public class Product {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

@@ -1,6 +1,6 @@
 package com.project.ecommerce.Service.Impl;
 
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Model.UserPrincipal;
 import com.project.ecommerce.Repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-       EcommerceUser user = userRepository.findByUsername(username)
+       Users user = userRepository.findByUsername(username)
                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
         return new UserPrincipal(user);

@@ -3,7 +3,7 @@ package com.project.ecommerce.Controller;
 import com.project.ecommerce.DTO.CartItemRequestDTO;
 import com.project.ecommerce.DTO.CartItemResponseDTO;
 import com.project.ecommerce.Model.CartItem;
-import com.project.ecommerce.Service.Interface.ShoppingCartService;
+import com.project.ecommerce.Service.Interface.CartService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,18 +16,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
-public class ShoppingCartController {
+public class CartController {
 
-    private final ShoppingCartService shoppingCartService;
+    private final CartService cartService;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService) {
-        this.shoppingCartService = shoppingCartService;
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @GetMapping
     public ResponseEntity<List<CartItemResponseDTO>> getAllCartItems(Principal principal, Pageable pageable) {
 
-        Page<CartItemResponseDTO> page = shoppingCartService.getCartItems(
+        Page<CartItemResponseDTO> page = cartService.getCartItems(
                 principal.getName(), PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
@@ -41,7 +41,7 @@ public class ShoppingCartController {
     public ResponseEntity<CartItem> addItemToCart(
             @RequestBody CartItemRequestDTO newCartItem, Principal principal) {
 
-        return ResponseEntity.ok(shoppingCartService.addItemToCart(newCartItem, principal.getName()));
+        return ResponseEntity.ok(cartService.addItemToCart(newCartItem, principal.getName()));
 
     }
 
@@ -49,13 +49,13 @@ public class ShoppingCartController {
     public ResponseEntity<CartItemResponseDTO> updateCartItem(
             @PathVariable Long id, Principal principal, @RequestBody CartItemRequestDTO requestDTO){
 
-        return ResponseEntity.ok(shoppingCartService.updateItemInCart(id,principal.getName(),requestDTO));
+        return ResponseEntity.ok(cartService.updateItemInCart(id,principal.getName(),requestDTO));
     }
 
     @DeleteMapping
     public ResponseEntity<List<Void>> deleteAllCartItems(Principal principal) {
 
-        shoppingCartService.deleteAllItems(principal.getName());
+        cartService.deleteAllItems(principal.getName());
 
         return ResponseEntity.noContent().build();
     }
@@ -63,7 +63,7 @@ public class ShoppingCartController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCartItemById(@PathVariable Long id, Principal principal) {
 
-        shoppingCartService.deleteCartItem(id, principal);
+        cartService.deleteCartItem(id, principal);
 
         return ResponseEntity.noContent().build();
     }

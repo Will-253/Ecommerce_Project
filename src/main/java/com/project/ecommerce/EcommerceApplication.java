@@ -1,9 +1,8 @@
 package com.project.ecommerce;
 
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Model.Role;
 import com.project.ecommerce.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,11 +22,11 @@ public class EcommerceApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        EcommerceUser Admin= userRepository.findByRole(Role.ADMIN);
+    public void run(String... args) {
+        Users Admin= userRepository.findByRole(Role.ADMIN);
 
         if(Admin==null) {
-            EcommerceUser user = new EcommerceUser();
+            Users user = new Users();
             user.setUsername("admin");
             user.setPassword(new BCryptPasswordEncoder(12).encode("admin"));
             user.setRole(Role.ADMIN);

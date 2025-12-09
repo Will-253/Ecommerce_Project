@@ -7,9 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.security.Principal;
-import java.util.List;
 
-public interface ShoppingCartService {
+public interface CartService {
 
     Page<CartItemResponseDTO> getCartItems(String name, PageRequest pageRequest);
 

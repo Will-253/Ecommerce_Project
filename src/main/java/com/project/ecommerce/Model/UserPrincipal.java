@@ -9,9 +9,9 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-    private final EcommerceUser user;
+    private final Users user;
 
-    public UserPrincipal(EcommerceUser user) {
+    public UserPrincipal(Users user) {
         this.user = user;
     }
 

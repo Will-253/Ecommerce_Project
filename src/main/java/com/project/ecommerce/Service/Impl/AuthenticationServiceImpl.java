@@ -4,7 +4,7 @@ import com.project.ecommerce.DTO.JwtAuthenticationResponse;
 import com.project.ecommerce.DTO.RefreshTokenRequest;
 import com.project.ecommerce.DTO.SignInRequest;
 import com.project.ecommerce.DTO.SignUpRequest;
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Model.Role;
 import com.project.ecommerce.Repository.UserRepository;
 import com.project.ecommerce.Service.Interface.AuthenticationService;
@@ -36,13 +36,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         this.jwtService = jwtService;
     }
 
-    public EcommerceUser SignUp(SignUpRequest signUpRequest){
+    public Users SignUp(SignUpRequest signUpRequest){
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             throw new IllegalArgumentException("Username is already taken!");
         }
 
-        EcommerceUser user = new EcommerceUser();
+        Users user = new Users();
 
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
@@ -78,7 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String username = jwtService.extractUserName(refreshTokenRequest.getToken());
 
-       EcommerceUser user = userRepository.findByUsername(username).orElseThrow();
+       Users user = userRepository.findByUsername(username).orElseThrow();
 
         if(jwtService.validateToken(refreshTokenRequest.getToken(), (UserDetails) user)){
 

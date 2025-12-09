@@ -4,13 +4,13 @@ import com.project.ecommerce.DTO.JwtAuthenticationResponse;
 import com.project.ecommerce.DTO.RefreshTokenRequest;
 import com.project.ecommerce.DTO.SignInRequest;
 import com.project.ecommerce.DTO.SignUpRequest;
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 
 public interface AuthenticationService {
 
-    public EcommerceUser SignUp(SignUpRequest signUpRequest);
+    Users SignUp(SignUpRequest signUpRequest);
 
-    public JwtAuthenticationResponse SignIn(SignInRequest signInRequest);
+    JwtAuthenticationResponse SignIn(SignInRequest signInRequest);
 
-    public JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
+    JwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
 }

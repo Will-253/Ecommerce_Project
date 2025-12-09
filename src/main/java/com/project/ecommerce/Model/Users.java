@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class EcommerceUser {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class EcommerceUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Orders> orders;
 
-    public EcommerceUser() {}
+    public Users() {}
 
-    public EcommerceUser(String username, String password, Role role, List<CartItem> cartItems, List<Orders> orders) {
+    public Users(String username, String password, Role role, List<CartItem> cartItems, List<Orders> orders) {
         this.username = username;
         this.password = password;
         this.role = role;

@@ -4,12 +4,12 @@ import com.project.ecommerce.DTO.CartItemRequestDTO;
 import com.project.ecommerce.DTO.CartItemResponseDTO;
 import com.project.ecommerce.Exceptions.ResourceNotFoundException;
 import com.project.ecommerce.Model.CartItem;
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Model.Product;
 import com.project.ecommerce.Repository.ProductRepository;
-import com.project.ecommerce.Repository.ShoppingCartRepository;
+import com.project.ecommerce.Repository.CartRepository;
 import com.project.ecommerce.Repository.UserRepository;
-import com.project.ecommerce.Service.Interface.ShoppingCartService;
+import com.project.ecommerce.Service.Interface.CartService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,15 +19,15 @@ import java.security.Principal;
 
 
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class CartServiceImpl implements CartService {
 
-    private final ShoppingCartRepository cartRepository;
+    private final CartRepository cartRepository;
 
     private final ProductRepository productRepository;
 
     private final UserRepository userRepository;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository cartRepository, ProductRepository productRepository, UserRepository userRepository) {
+    public CartServiceImpl(CartRepository cartRepository, ProductRepository productRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
@@ -114,7 +114,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Product product = productRepository.findById(requestDTO.getProductId())
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + requestDTO.getProductId()));
 
-        EcommerceUser user = userRepository.findByUsername(name)
+        Users user = userRepository.findByUsername(name)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + name));
 
         CartItem cartItem = new CartItem();

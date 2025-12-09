@@ -1,9 +1,45 @@
 package com.project.ecommerce.Controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.project.ecommerce.Model.Orders;
+import com.project.ecommerce.Service.Interface.OrderService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/orders")
 public class OrderController {
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Orders> PlaceOrder(Principal principal) {
+
+        String username = principal.getName();
+
+        Orders finalizedOrder = orderService.placeNewOrderFromCart(username);
+
+        return new ResponseEntity<>(finalizedOrder, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<Orders>> getAllOrders(){
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Orders> getOrderById(@PathVariable Long id){
+        return ResponseEntity.ok().build();
+    }
 
 
 }

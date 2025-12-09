@@ -17,12 +17,12 @@ public class CartItem {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private EcommerceUser user;
+    private Users user;
 
     public CartItem() {
     }
 
-    public CartItem(int quantity, Product product, EcommerceUser user) {
+    public CartItem(int quantity, Product product, Users user) {
         this.quantity = quantity;
         this.product = product;
         this.user = user;
@@ -52,11 +52,11 @@ public class CartItem {
         this.product = product;
     }
 
-    public EcommerceUser getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(EcommerceUser user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 }

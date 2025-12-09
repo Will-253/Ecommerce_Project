@@ -18,7 +18,7 @@ public class Orders {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private EcommerceUser user;
+    private Users user;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
@@ -26,7 +26,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Double totalPrice, LocalDateTime orderDate, List<OrderItem> orderItems, EcommerceUser user) {
+    public Orders(Double totalPrice, LocalDateTime orderDate, List<OrderItem> orderItems, Users user) {
         this.totalPrice = totalPrice;
         this.orderDate = orderDate;
         this.orderItems = orderItems;
@@ -57,11 +57,11 @@ public class Orders {
         this.orderDate = orderDate;
     }
 
-    public EcommerceUser getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(EcommerceUser user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

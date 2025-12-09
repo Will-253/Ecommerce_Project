@@ -4,7 +4,7 @@ import com.project.ecommerce.DTO.JwtAuthenticationResponse;
 import com.project.ecommerce.DTO.RefreshTokenRequest;
 import com.project.ecommerce.DTO.SignInRequest;
 import com.project.ecommerce.DTO.SignUpRequest;
-import com.project.ecommerce.Model.EcommerceUser;
+import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Service.Interface.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<EcommerceUser> register(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<Users> register(@RequestBody SignUpRequest signUpRequest){
 
         return ResponseEntity.ok(authenticationService.SignUp(signUpRequest));
     }
