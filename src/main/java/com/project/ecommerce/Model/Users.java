@@ -1,5 +1,6 @@
 package com.project.ecommerce.Model;
 
+import com.project.ecommerce.Model.Enums.Role;
 import jakarta.persistence.*;
 import java.util.List;
 

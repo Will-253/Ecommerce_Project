@@ -29,15 +29,22 @@ public class OrderController {
         return new ResponseEntity<>(finalizedOrder, HttpStatus.CREATED);
     }
 
-
     @GetMapping
-    public ResponseEntity<List<Orders>> getAllOrders(){
+    public ResponseEntity<List<Orders>> getOrdersByUser(Principal principal) {
 
-        return ResponseEntity.ok().build();
+        String username = principal.getName();
+
+        List<Orders> allOrders = orderService.findOrdersByUsername(username);
+
+        if (allOrders.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(allOrders);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable Long id){
+    public ResponseEntity<Orders> getOrdersById(@PathVariable Long id){
         return ResponseEntity.ok().build();
     }
 

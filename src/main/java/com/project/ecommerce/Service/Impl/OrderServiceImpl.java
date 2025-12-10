@@ -91,4 +91,13 @@ public class OrderServiceImpl implements OrderService {
 
         return savedOrder;
     }
+
+    @Override
+    public List<Orders> findOrdersByUsername(String username) {
+
+        Users currentUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found: " + username));
+
+        return orderRepository.findByUser(currentUser);
+    }
 }

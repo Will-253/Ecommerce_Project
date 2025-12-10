@@ -1,6 +1,6 @@
 package com.project.ecommerce.Configuration;
 
-import com.project.ecommerce.Model.Role;
+import com.project.ecommerce.Model.Enums.Role;
 import com.project.ecommerce.Service.Impl.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

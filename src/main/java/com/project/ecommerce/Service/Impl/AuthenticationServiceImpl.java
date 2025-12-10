@@ -5,7 +5,7 @@ import com.project.ecommerce.DTO.RefreshTokenRequest;
 import com.project.ecommerce.DTO.SignInRequest;
 import com.project.ecommerce.DTO.SignUpRequest;
 import com.project.ecommerce.Model.Users;
-import com.project.ecommerce.Model.Role;
+import com.project.ecommerce.Model.Enums.Role;
 import com.project.ecommerce.Repository.UserRepository;
 import com.project.ecommerce.Service.Interface.AuthenticationService;
 import com.project.ecommerce.Service.Interface.JwtService;

@@ -1,7 +1,7 @@
 package com.project.ecommerce;
 
 import com.project.ecommerce.Model.Users;
-import com.project.ecommerce.Model.Role;
+import com.project.ecommerce.Model.Enums.Role;
 import com.project.ecommerce.Repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
