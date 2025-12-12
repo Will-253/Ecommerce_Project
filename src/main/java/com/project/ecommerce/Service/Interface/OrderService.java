@@ -9,4 +9,6 @@ public interface OrderService {
     Orders placeNewOrderFromCart(String username);
 
     List<Orders> findOrdersByUsername(String username);
+
+    Orders findOrderByIdAndUsername(Long orderId, String name);
 }

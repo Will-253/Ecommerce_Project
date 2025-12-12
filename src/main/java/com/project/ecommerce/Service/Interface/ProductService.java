@@ -18,5 +18,5 @@ public interface ProductService {
 
     ProductDTO updateProduct(Long id, ProductDTO productDTO);
 
-
+    Page<ProductDTO> searchProducts(String keyword, PageRequest page);
 }

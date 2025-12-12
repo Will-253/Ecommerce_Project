@@ -70,6 +70,14 @@ public class ProductServiceImpl implements ProductService {
         return convertToDTO(savedProduct);
     }
 
+    @Override
+    public Page<ProductDTO> searchProducts(String keyword, PageRequest page) {
+
+        Page<Product> productEntityPage = productRepository.searchProducts(keyword, page);
+
+        return productEntityPage.map(this::convertToDTO);
+    }
+
     private ProductDTO convertToDTO(Product product) {
         return new ProductDTO(
                 product.getName(),

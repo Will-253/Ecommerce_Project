@@ -44,7 +44,10 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Orders> getOrdersById(@PathVariable Long id){
+    public ResponseEntity<Orders> getOrdersById(@PathVariable Long id, Principal principal) {
+
+        Orders order = orderService.findOrderByIdAndUsername(id,principal.getName());
+
         return ResponseEntity.ok().build();
     }
 

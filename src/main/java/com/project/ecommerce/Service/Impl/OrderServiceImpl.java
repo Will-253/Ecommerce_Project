@@ -100,4 +100,16 @@ public class OrderServiceImpl implements OrderService {
 
         return orderRepository.findByUser(currentUser);
     }
+
+    @Override
+    public Orders findOrderByIdAndUsername(Long orderId, String name) {
+
+        Users user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new RuntimeException("User not found: " + name));
+
+        Orders order = orderRepository.findByIdAndUser(orderId, user)
+                .orElseThrow(() -> new RuntimeException("Order not found: " + orderId));
+
+        return order;
+    }
 }

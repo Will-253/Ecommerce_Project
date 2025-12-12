@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -40,6 +41,19 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findProductById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProductDTO>> searchProducts(
+            @RequestParam String keyword, Pageable page) {
+
+        Page<ProductDTO> productPage = productService.searchProducts(keyword, PageRequest.of(
+                page.getPageNumber(),
+                page.getPageSize(),
+                page.getSortOr(Sort.by(Sort.Direction.ASC, "name"))
+        ));
+
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     @PostMapping
