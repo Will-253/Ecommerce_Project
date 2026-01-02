@@ -3,6 +3,7 @@ package com.project.ecommerce.Model;
 import jakarta.persistence.*;
 
 @Entity
+@Access(AccessType.FIELD)
 public class CartItem {
 
     @Id

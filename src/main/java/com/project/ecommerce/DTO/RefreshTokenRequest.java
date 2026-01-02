@@ -14,5 +14,7 @@ public class RefreshTokenRequest {
         return token;
     }
 
-    public void setToken(String token) {}
+    public void setToken(String token) {
+        this.token = token;
+    }
 }
