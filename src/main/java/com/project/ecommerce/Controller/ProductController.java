@@ -25,7 +25,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<ProductDTO>> getAllProducts(Pageable pageable) {
 
         Page<ProductDTO> page = productService.findAllProducts(
