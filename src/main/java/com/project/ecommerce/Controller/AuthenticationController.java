@@ -7,10 +7,7 @@ import com.project.ecommerce.DTO.SignUpRequest;
 import com.project.ecommerce.Model.Users;
 import com.project.ecommerce.Service.Interface.AuthenticationService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,6 +17,11 @@ public class AuthenticationController {
 
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
+    }
+
+    @GetMapping("/")
+    public String welcome() {
+        return "Welcome to the E-commerce API!";
     }
 
     @PostMapping("/signup")
