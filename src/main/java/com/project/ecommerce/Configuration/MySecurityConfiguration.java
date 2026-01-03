@@ -38,7 +38,7 @@ public class MySecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("/api/auth/**", "/api/products/**").permitAll()
+                        request.requestMatchers("/","/api/auth/**", "/api/products/**").permitAll()
                                 .requestMatchers("/api/admin**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers("/api/cart**","/api/orders**").hasAnyAuthority(Role.USER.name())
                                 .anyRequest().authenticated())
